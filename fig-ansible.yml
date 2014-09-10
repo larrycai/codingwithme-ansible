@@ -1,0 +1,17 @@
+ansible:
+  image: dockerfile/ansible
+  volumes: 
+   - .:/data
+  links: 
+   - haproxy
+   - web1
+   - web2
+   - database
+haproxy:
+  image: larrycai/ubuntu-sshd
+web1:
+  image: larrycai/ubuntu-sshd
+web2:
+  image: larrycai/ubuntu-sshd
+database:
+  image: larrycai/ubuntu-sshd

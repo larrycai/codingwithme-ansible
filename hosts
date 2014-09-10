@@ -1,0 +1,9 @@
+[arm]
+localhost ansible_connection=local
+[haproxy]
+haproxy_1
+[web]
+web1_1
+web2_1
+[database]
+database_1

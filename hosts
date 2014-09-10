@@ -1,4 +1,4 @@
-[arm]
+[ansible]
 localhost ansible_connection=local
 [haproxy]
 haproxy_1

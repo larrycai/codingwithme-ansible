@@ -2,5 +2,5 @@
 - hosts: localhost
   tasks:
   - debug: msg="Hello world!"
-    When: var_foo=="hey"
+    when: var_foo=="hey"
 

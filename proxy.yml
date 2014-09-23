@@ -1,0 +1,10 @@
+--- 
+- name: set system proxy for all
+  hosts: all:!localhost
+  vars: 
+    http_proxy: http://www-proxy.ericsson.se:8080
+  tasks:
+    - name: set proxy
+      lineinfile: line='Acquire::http::proxy "{{ http_proxy }}";' dest=/etc/apt/apt.conf.d/95proxies  create=yes
+    - name: update apt repo
+      apt:  update-cache=yes

@@ -1,0 +1,16 @@
+fig-ansible.yml run ansible bash--- 
+- name: create directory
+  hosts: web
+  tasks:
+    - name: create directory 
+      file: path=/ansible state=directory
+
+# sample below to continue      
+- name: install web server
+  hosts: web
+  tasks:
+    - apt: name=<?> state=present
+      environment:
+        http_proxy: 
+    - service: name=<?> state=<?>
+  

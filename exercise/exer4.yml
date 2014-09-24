@@ -1,0 +1,20 @@
+--- 
+- name: check apache2 ip address
+  hosts: web
+  tasks:
+    - debug: msg="now I am host {{ inventory_hostname }}" 
+    - debug: var=hostvars[inventory_hostname]
+    - debug: msg=" ip4 address is {{ ansible_eth0.ipv4.address }}"
+    - set_fact: "ipv4={{ ansible_eth0.ipv4.address }}"
+ 
+#- name: 
+#  hosts: web
+#  tasks:
+#    - debug: var=hostvars[web1_1]
+    
+- name: 
+  hosts: haproxy
+  tasks:
+    - apt: name=haproxy state=present
+      register: pkg
+      

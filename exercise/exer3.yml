@@ -1,4 +1,4 @@
-fig-ansible.yml run ansible bash--- 
+--- 
 - name: create directory
   hosts: web
   tasks:
@@ -9,8 +9,9 @@ fig-ansible.yml run ansible bash---
 - name: install web server
   hosts: web
   tasks:
-    - apt: name=<?> state=present
-      environment:
-        http_proxy: 
-    - service: name=<?> state=<?>
+    - name: install apache2 web server
+      apt: name=apache2 state=present
+
+    - name: make the service ready
+      service: name=apache2 state=running
   

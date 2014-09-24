@@ -1,5 +1,8 @@
-echo "Prepare for the ansible env"
-docker run -d --name haproxy larrycai/ubuntu-sshd 
+echo "Prepare for the ansible env: dockerfile/ansible and several ubuntu hosts"
+echo "run 'stop.sh' if they already started before"
+echo "You will enter into bash for ansible environment (inside docker container)"
+echo ""
+docker run -d --name haproxy -p :1080 larrycai/ubuntu-sshd 
 docker run -d --name web1 larrycai/ubuntu-sshd 
 docker run -d --name web2 larrycai/ubuntu-sshd 
 docker run -d --name database larrycai/ubuntu-sshd 

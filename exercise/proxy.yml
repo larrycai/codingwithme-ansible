@@ -6,6 +6,3 @@
   tasks:
     - name: set proxy, use -e http_proxy from command line
       lineinfile: line='Acquire::http::proxy "{{ http_proxy }}";' dest=/etc/apt/apt.conf.d/95proxies  create=yes
-
-    - name: update apt repo
-      apt:  update-cache=yes

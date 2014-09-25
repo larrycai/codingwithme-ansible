@@ -7,3 +7,4 @@ haproxy_stats_port: 1080
 mode: http
 balance: roundrobin
 iface: eth0
+extra_package: socat

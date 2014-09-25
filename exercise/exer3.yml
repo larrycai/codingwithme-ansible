@@ -5,7 +5,12 @@
     - name: create directory 
       file: path=/ansible state=directory
 
-# sample below to continue      
+- name: update apt repo
+  hosts: all:!localhost
+  tasks:
+    - name: update apt repo
+      apt:  update-cache=yes
+      
 - name: install web server
   hosts: web
   tasks:

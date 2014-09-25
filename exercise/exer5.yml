@@ -7,6 +7,15 @@
 - name:
   hosts: haproxy
   tasks:
+  - apt: name={{ item }} state=present
+    with_items:
+      - curl
+      - wget
+      - {{ extra_package }}
+      
+  - name: enable haproxy to be started by initial script
+    lineinfile: dest=/etc/default/haproxy regexp="^ENABLED=.*" line="ENABLED=1"
+    
   - name: Configure the haproxy cnf file with hosts
     template: src=templates/haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg
     notify: restart haproxy

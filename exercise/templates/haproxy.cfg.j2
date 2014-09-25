@@ -1,42 +1,52 @@
 global
-    log         127.0.0.1 local2 
-
-    chroot      /var/lib/haproxy
-    pidfile     /var/run/haproxy.pid
-    maxconn     4000
-    user        root
-    group       root
-    daemon
-
-    # turn on stats unix socket
-    stats socket /var/lib/haproxy/stats level admin
-
+        log 127.0.0.1   local2 info
+		log 127.0.0.1	local2 notice
+        chroot /var/lib/haproxy
+		pidfile /var/run/haproxy.pid
+        maxconn 4000
+        daemon
+		stats socket /etc/haproxy/haproxy.sock level admin
 defaults
-    mode                    {{ mode }}
-    log                     global
-    option                  httplog
-    option                  dontlognull
-    option http-server-close
-    option forwardfor       except 127.0.0.0/8
-    option                  redispatch
-    retries                 3
-    timeout http-request    10s
-    timeout queue           1m
-    timeout connect         10s
-    timeout client          1m
-    timeout server          1m
-    timeout http-keep-alive 10s
-    timeout check           10s
-    maxconn                 3000
-
-listen stats :{{ haproxy_stats_port }}
-    stats enable
-    
-frontend localnodes
-    bind *:{{ haproxy_web_port }}
-    
-backend app
-    balance     {{ balance }}
-    {% for host in groups['web'] %}
-server {{ host }} {{ hostvars[host]['ansible_' + iface].ipv4.address }}:{{ httpd_port }}
-    {% endfor %}
+        log     global
+        mode    {{ mode }}
+        option  httplog
+        option  dontlognull
+        option  http-server-close
+        option forwardfor except 127.0.0.0/8
+        option redispatch
+        retries 3
+        contimeout 5000
+        clitimeout 50000
+        srvtimeout 50000
+        errorfile 400 /etc/haproxy/errors/400.http
+        errorfile 403 /etc/haproxy/errors/403.http
+        errorfile 408 /etc/haproxy/errors/408.http
+        errorfile 500 /etc/haproxy/errors/500.http
+        errorfile 502 /etc/haproxy/errors/502.http
+        errorfile 503 /etc/haproxy/errors/503.http
+        errorfile 504 /etc/haproxy/errors/504.http
+listen  stats
+        mode    http
+        bind   0.0.0.0:{{ haproxy_stats_port }}
+        stats   enable
+        stats   refresh 5s
+        stats   hide-version
+        stats   uri     /
+        stats   realm   Haproxy\ Statistics
+        # stats   auth admin:admin
+        stats   admin if TRUE
+frontend http-in
+        bind *:{{ haproxy_web_port }}
+        mode    http
+        log     global
+        option  httpclose
+        option  logasap
+        option  dontlognull
+        capture request header Host len 20
+        capture response header Host len 20
+        default_backend server1
+backend server1
+        balance {{ balance }}
+        {% for host in groups['web'] %}
+        server {{ host }} {{ hostvars[host]['ansible_' + iface].ipv4.address }}:{{ httpd_port }}
+        {% endfor %}

@@ -1,7 +1,0 @@
----
-- hosts: web
-  task:
-  - apt: name=apache2 state=present
-    environment:
-      http_proxy: http://proxy.example.com:8080
-  - service: name=httpd state=stated

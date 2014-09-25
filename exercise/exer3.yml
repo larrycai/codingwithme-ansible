@@ -2,8 +2,8 @@
 - name: create directory
   hosts: web
   tasks:
-    - name: create directory 
-      file: path=/ansible state=directory
+#    - name: create directory 
+#      file: path=? state=?
 
 - name: update apt repo
   hosts: all:!localhost
@@ -14,9 +14,9 @@
 - name: install web server
   hosts: web
   tasks:
-    - name: install apache2 web server
-      apt: name=apache2 state=present
+#    - name: install apache2 web server
+#      apt: name=? state=?
 
-    - name: make the service ready
-      service: name=apache2 state=running
+#    - name: make the service ready
+#      service: name=apache2 state=?
   

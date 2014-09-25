@@ -11,7 +11,7 @@
     with_items:
       - curl
       - wget
-      - {{ extra_package }}
+      - "{{ extra_package }}"
       
   - name: enable haproxy to be started by initial script
     lineinfile: dest=/etc/default/haproxy regexp="^ENABLED=.*" line="ENABLED=1"

@@ -1,4 +1,4 @@
-== Introduction ==
+## Introduction ##
 
 this is local development environment for ansible 
 
@@ -22,3 +22,7 @@ Exercise
     $ ansible-playbook exer3.yml
     $ ansible-playbook exer4.yml
     $ ansible-playbook exer5.yml
+    
+## Reference ##
+
+* slides: http://www.slideshare.net/larrycai/learn-basic-ansible-using-docker    

@@ -1,7 +1,7 @@
 ansible:
   image: dockerfile/ansible
   volumes: 
-   - .:/data
+   - /home/docker/codingwithme-ansible:/data
   links: 
    - haproxy
    - web1
